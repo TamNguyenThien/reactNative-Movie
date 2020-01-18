@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createStackNavigator } from 'react-navigation-stack'
-import { createSwitchNavigator, createAppContainer } from 'react-navigation'
+import { createSwitchNavigator, createAppContainer, View } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import HomeScreen from './screens/HomeScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import DetailsScreen from './screens/DetailsScreen'
 import LoginScreen from './screens/LoginScreen'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { ActivityIndicator, StatusBar } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const HomeStack = createStackNavigator({
   HomeScreen: HomeScreen,
@@ -55,9 +57,35 @@ const BottomNav = createBottomTabNavigator({
   }
 }
 )
+const AuthStackNavigator = createStackNavigator(
+  {
+    LoginScreen: LoginScreen
+  },
+  {
+    headerMode: 'none'
+  }
+)
 
+// function AuthLoadingScreen (props) {
+//   useEffect(() => {
+//     _bootstrapAsync()
+//   })
+
+//   const _bootstrapAsync = async () => {
+//     const userToken = await AsyncStorage.getItem('userToken')
+//     props.navigation.navigate(userToken ? 'Dashboard' : 'Auth')
+//   }
+
+//   return (
+//     <View>
+//       <ActivityIndicator />
+//       <StatusBar barStyle='default' />
+//     </View>
+//   )
+// }
 const SwitchNav = createSwitchNavigator({
-  LoginScreen: LoginScreen,
+  // AuthLoading: AuthLoadingScreen,
+  Auth: AuthStackNavigator,
   Dashboard: BottomNav
 })
 
