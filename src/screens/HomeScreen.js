@@ -16,7 +16,7 @@ export default class HomeScreen extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => this.props.navigation.navigate('DetailsScreen')}>
+                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => this.props.navigation.navigate('DetailsScreen', { item })}>
                   <View>
                     <Image
                       source={{
@@ -43,7 +43,7 @@ export default class HomeScreen extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('DetailsScreen')}>
+                <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.props.navigation.navigate('DetailsScreen', { item })}>
                   <View style={{ flexDirection: 'row' }}>
                     <Image
                       source={{

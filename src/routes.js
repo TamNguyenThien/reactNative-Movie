@@ -9,6 +9,8 @@ import LoginScreen from './screens/LoginScreen'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { ActivityIndicator, StatusBar } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
+import SplashScreen from './screens/Splash'
+import IntroScreen from './screens/Intro'
 
 const HomeStack = createStackNavigator({
   HomeScreen: HomeScreen,
@@ -66,25 +68,27 @@ const AuthStackNavigator = createStackNavigator(
   }
 )
 
-// function AuthLoadingScreen (props) {
-//   useEffect(() => {
-//     _bootstrapAsync()
-//   })
+function AuthLoadingScreen (props) {
+  useEffect(() => {
+    _bootstrapAsync()
+  })
 
-//   const _bootstrapAsync = async () => {
-//     const userToken = await AsyncStorage.getItem('userToken')
-//     props.navigation.navigate(userToken ? 'Dashboard' : 'Auth')
-//   }
+  const _bootstrapAsync = async () => {
+    const userToken = await AsyncStorage.getItem('userToken')
+    props.navigation.navigate(userToken ? 'Dashboard' : 'Auth')
+  }
 
-//   return (
-//     <View>
-//       <ActivityIndicator />
-//       <StatusBar barStyle='default' />
-//     </View>
-//   )
-// }
+  return (
+    <View>
+      <ActivityIndicator />
+      <StatusBar barStyle='default' />
+    </View>
+  )
+}
 const SwitchNav = createSwitchNavigator({
-  // AuthLoading: AuthLoadingScreen,
+  Splash: SplashScreen,
+  Intro: IntroScreen,
+  AuthLoading: AuthLoadingScreen,
   Auth: AuthStackNavigator,
   Dashboard: BottomNav
 })

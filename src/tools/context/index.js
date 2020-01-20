@@ -6,28 +6,31 @@ const CTX = React.createContext()
 export { CTX }
 
 export default function Store (props) {
-  const [isAuth, setIsAuth] = useState(false)
+  const [token, setToken] = useState(null)
+  const [intro, setIntro] = useState(null)
 
   useEffect(() => {
-    fetchToken()
+    _bootstrapAsync()
   })
-
-  const fetchToken = async () => {
-    setIsAuth(!!(await AsyncStorage.getItem('@access_token')))
+  const _bootstrapAsync = async () => {
+    const userToken = await AsyncStorage.getItem('userToken')
+    const userIntro = await AsyncStorage.getItem('userIntro')
+    setToken(userToken)
+    setIntro(userIntro)
   }
 
-  const authenticate = async token => {
-    await AsyncStorage.setItem('@access_token', token)
-    setIsAuth(true)
+  const _authenticate = async accessToken => {
+    await AsyncStorage.setItem('userToken', accessToken)
   }
 
-  const logout = async () => {
-    await AsyncStorage.removeItem('@access_token')
-    setIsAuth(false)
+  const _logout = async () => {
+    await AsyncStorage.removeItem('userToken')
   }
-
+  const _seen = async () => {
+    await AsyncStorage.setItem('userIntro', 'done')
+  }
   return (
-    <CTX.Provider value={{ isAuth, authenticate, logout }}>
+    <CTX.Provider value={{ token, _authenticate, _logout, intro, _seen }}>
       {props.children}
     </CTX.Provider>
   )
